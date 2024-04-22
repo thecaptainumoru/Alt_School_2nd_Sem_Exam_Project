@@ -1,0 +1,13 @@
+---
+- name: Provision LAMP Stack on Master
+  hosts: master
+  become: true  # Run tasks with root privileges
+  roles:
+    - lamp
+
+- name: Deploy Laravel Application (on Slave from Master script)
+  hosts: slave
+  become: true
+  tasks:
+    - name: Run deploy script from Master
+      script: vagrant ssh master -c 'bash /path/to/deploy-lamp.sh'
